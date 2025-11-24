@@ -1,19 +1,21 @@
+import useAuthStore from "@/store/auth.store";
 import { Stack } from "expo-router";
-import './globals.css';
+import { useEffect } from "react";
+import "./globals.css";
 
 export default function RootLayout() {
+  const { isLoading, fetchAuthenticatedUser } = useAuthStore();
 
-  const isLoggedIn = true;
-  
+  useEffect(() => {
+    fetchAuthenticatedUser(); 
+  }, []);
+
+  if (isLoading) return null; 
+
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Protected guard={!isLoggedIn}>
-        <Stack.Screen name="(auth)" />
-      </Stack.Protected>
-
-      <Stack.Protected guard={isLoggedIn}>
-        <Stack.Screen name="(tabs)" />
-      </Stack.Protected>
+      <Stack.Screen name="(auth)" />
+      <Stack.Screen name="(tabs)" />
     </Stack>
   );
 }

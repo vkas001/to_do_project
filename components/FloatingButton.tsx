@@ -1,18 +1,22 @@
-import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 
-interface Props {
-  onPress: () => void;
-}
-
-const FloatingButton = ({ onPress }: Props) => {
+const FloatingButton: React.FC<{ onPress: () => void }> = ({ onPress }) => {
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      className="absolute bottom-10 right-10 bg-blue-500 w-16 h-16 rounded-full items-center justify-center shadow-xl"
-    >
-      <Ionicons name="add" size={36} color="white" />
+    <TouchableOpacity onPress={onPress} style={{
+      backgroundColor: "#2563EB",
+      width: 56,
+      height: 56,
+      borderRadius: 28,
+      justifyContent: "center",
+      alignItems: "center",
+      margin: 16,
+      shadowColor: "#000",
+      shadowOpacity: 0.3,
+      shadowRadius: 6,
+      elevation: 6
+    }}>
+      <Text style={{ color: "white", fontSize: 28 }}>+</Text>
     </TouchableOpacity>
   );
 };

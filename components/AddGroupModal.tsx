@@ -1,51 +1,30 @@
 import React from "react";
-import { Modal, Text, TouchableOpacity, View } from "react-native";
-import CustomInput from "./CustomInput";
+import { Modal, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 interface Props {
   visible: boolean;
   groupName: string;
-  setGroupName: (name: string) => void;
+  setGroupName: (v: string) => void;
   onCancel: () => void;
   onSave: () => void;
 }
 
-const AddGroupModal = ({
-  visible,
-  groupName,
-  setGroupName,
-  onCancel,
-  onSave,
-
-}: Props) => {
-
+const AddGroupModal: React.FC<Props> = ({ visible, groupName, setGroupName, onCancel, onSave }) => {
   return (
     <Modal visible={visible} transparent animationType="slide">
-      <View className="flex-1 justify-center items-center bg-black/60 px-6">
-        <View className="w-full bg-white rounded-2xl p-6">
-          <Text className="text-xl font-semibold mb-4">Add To-Do Group</Text>
-
-          <CustomInput
-            label="Group Name"
+      <View style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.5)", justifyContent: "center", alignItems: "center" }}>
+        <View style={{ width: "90%", backgroundColor: "#111827", padding: 16, borderRadius: 12 }}>
+          <Text style={{ color: "white", fontSize: 18, marginBottom: 8 }}>New Todo Group</Text>
+          <TextInput
             value={groupName}
             onChangeText={setGroupName}
-            placeholder="Enter your group name"
+            placeholder="Group name"
+            placeholderTextColor="#888"
+            style={{ backgroundColor: "#1f2937", color: "white", padding: 10, borderRadius: 8 }}
           />
-
-          <View className="flex-row justify-between mt-6">
-            <TouchableOpacity
-              onPress={onCancel}
-              className="px-5 py-3 bg-black rounded-xl"
-            >
-              <Text className="text-white text-base font-semibold">Cancel</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={onSave}
-              className="px-6 py-3 bg-black rounded-xl"
-            >
-              <Text className="text-white text-base font-semibold">Save</Text>
-            </TouchableOpacity>
+          <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>
+            <TouchableOpacity onPress={onCancel}><Text style={{ color: "#9CA3AF" }}>Cancel</Text></TouchableOpacity>
+            <TouchableOpacity onPress={onSave}><Text style={{ color: "#60A5FA", fontWeight: "600" }}>Save</Text></TouchableOpacity>
           </View>
         </View>
       </View>

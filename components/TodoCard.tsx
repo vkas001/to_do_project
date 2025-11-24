@@ -1,51 +1,75 @@
+// components/TodoCard.tsx
 import { Feather } from "@expo/vector-icons";
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 interface Props {
   title: string;
   completed: boolean;
+  taskCount: number;
   onToggle: () => void;
   onDelete: () => void;
   onOpen: () => void;
 }
 
-const TodoCard = ({ title, completed, onToggle, onDelete, onOpen }: Props) => {
+const TodoCard: React.FC<Props> = ({
+  title,
+  completed,
+  taskCount,
+  onToggle,
+  onDelete,
+  onOpen,
+}) => {
   return (
     <TouchableOpacity
-      activeOpacity={0.8}
+      activeOpacity={0.9}
       onPress={onOpen}
-      className="bg-white/10 px-4 py-5 rounded-xl mb-4 flex-row items-center"
+      style={{
+        backgroundColor: "#111827",
+        padding: 12,
+        borderRadius: 12,
+        marginBottom: 12,
+      }}
     >
-      {/* LEFT CHECKBOX */}
-      <TouchableOpacity
-        onPress={(e) => {
-          e.stopPropagation();   // stops triggering card onPress
-          onToggle();
-        }}
-        className={`w-6 h-6 rounded-md border-2 mr-4 
-          ${completed ? "bg-green-500 border-green-500" : "border-white"}
-        `}
-      />
-
-      {/* TITLE */}
-      <Text
-        className={`text-white text-lg flex-1 ${
-          completed ? "line-through text-gray-400" : ""
-        }`}
-      >
+      <Text style={{ color: "white", fontSize: 18, fontWeight: "600" }}>
         {title}
       </Text>
+      <Text style={{ color: "#9CA3AF", marginTop: 4 }}>
+        {taskCount} tasks
+      </Text>
 
-      {/* DELETE ICON */}
-      <TouchableOpacity
-        onPress={(e) => {
-          e.stopPropagation();   // stops card onPress
-          onDelete();
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginTop: 10,
+          alignItems: "center",
         }}
       >
-        <Feather name="trash-2" size={22} color="red" />
-      </TouchableOpacity>
+        {/* Checkbox Toggle */}
+        <TouchableOpacity
+          onPress={(e) => {
+            e.stopPropagation(); // prevents card click
+            onToggle();
+          }}
+        >
+          <Feather
+            name={completed ? "check-square" : "square"}
+            size={22}
+            color={completed ? "#10B981" : "#9CA3AF"}
+          />
+        </TouchableOpacity>
+
+        {/* Delete Icon */}
+        <TouchableOpacity
+          onPress={(e) => {
+            e.stopPropagation();
+            onDelete();
+          }}
+        >
+          <Feather name="trash-2" size={22} color="#F87171" />
+        </TouchableOpacity>
+      </View>
     </TouchableOpacity>
   );
 };
